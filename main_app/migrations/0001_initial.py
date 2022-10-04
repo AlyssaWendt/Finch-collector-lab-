@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=150)),
                 ('img', models.CharField(default='avatar.png', max_length=500)),
                 ('bio', models.TextField(max_length=1000)),
-                ('verified_artist', models.BooleanField(default=False)),
+                ('verified_finch', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
             options={

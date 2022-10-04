@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %} {{artist.name}}'s best songs {% endblock %}
+{% block content %}
+<div class="detail__img">
+    <img src="{{finch.img}}" alt="{{finch.name}}" />
+</div>
+<div class="detail__name">
+    {% if finch.verified_finch %}
+    <div class="icon-text">
+        <span class="icon has-text-info">
+            <i class="fas fa-check-circle"></i>
+        </span>
+        <span>Verified</span>
+    </div>
+    {% endif %}
+    <h1 class="title">{{finch.name}}</h1>
+</div>
+<div class="detail__container">
+    <div class="buttons">
+        <a href="{% url 'finch_update' finch.pk %}" class="button is-info">
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+        </a>
+        <a href="/finch/{{finch.id}}/delete" class="button is-danger">
+            <span class="icon">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </a>
+    </div>
+    <div class="detail__songs mb-5">
+        <h3 class="title is-3">Songs</h3>
+
+        <form class="mb-5" action="{% url 'song_create' finch.pk %}" method="post">
+            {% csrf_token %}
+            <div class="field has-addons">
+                <div class="control">
+                    <input
+                        class="input"
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                        required
+                    />
+                </div>
+                <div class="control">
+                    <input
+                        class="input"
+                        type="number"
+                        name="minutes"
+                        placeholder="Length in Minutes"
+                        min="0"
+                        required
+                    />
+                </div>
+                <div class="control">
+                    <input
+                        class="input"
+                        type="number"
+                        name="seconds"
+                        placeholder="Length in Seconds"
+                        min="0"
+                        required
+                    />
+                </div>
+                <div class="control">
+                    <input class="button is-primary" type="submit" value="Add Song" />
+                </div>
+            </div>
+        </form>
+
+        {% for song in finch.songs.all %}
+            <div class="song">
+                <span>{{forloop.counter}}</span>
+                <span><b>{{song.title}}</b></span>
+                <span>{{song.get_length}}</span>
+            </div>
+        {% empty %}
+            <article class="message">
+                <div class="message-header">
+                    <p>No Songs Available</p>
+                </div>
+            </article>
+
+        {% endfor %}
+    </div>
+
+    </div>
+    <div class="detail__about">
+        <h4 class="title is-4">About</h4>
+        <p>{{finch.bio}}</p>
+    </div>
+</div>
+
+{% endblock %}

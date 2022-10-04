@@ -1,31 +1,42 @@
-{% extends 'base.html' %}
-
-{% comment %} for head title tags and helping us with SEO {% endcomment %}
-{% block title %}Finch{% endblock  %}
+{% extends 'base.html' %} 
+{% block title %}
+{{stuff_at_top}}
+{% endblock %}
 
 {% block content %}
 
-<h1 class="title pt-5">Cool Birds</h1>
+<h1 class="title">{{stuff_at_top}}</h1>
+
+<form class="mb-5" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <!--  Our input will search by name of finch  -->
+      <input class="input" type="text" name="name" placeholder="search for finches" />
+    </div>
+    <div class="control">
+      <input class="button is-success" type="submit" value="Search" />
+    </div>
+  </div>
+  <!--  This anchor tag will redirect back to artist list without a query param -->
+  <a class="button is-dark" href="{% url 'finch_list' %}">Clear Search</a>
+</form>
 <div class="gallery">
-  {% for finch in finches %}
-  <a href="">
+  {% for bird in finch %}
     <div class="card">
-      <div class="card-image">
-        <figure class="image is-square">
-          <img src="{{finch.image}}" alt="{{finch.name}}" />
-        </figure>
+      <a href="{% url 'finch_detail' bird.pk %}" >
+        <div class="card-image">
+          <figure class="image is-square">
+            <img src="{{bird.img}}" alt="{{bird.name}}" />
+          </figure>
+        </div>
+        <div class="card-header">
+          <p class="card-header-title">{{bird.name}}</p>
+        </div>
+      </a>
       </div>
-      <div class="card-header">
-        <p class="card-header-title">{{finch.name}}</p>
-      </div>
-    </div>
-  </a>
-	{% empty %}
-  <article class="message">
-    <div class="message-header">
-      <p>No Birds in Site</p>
-    </div>
-  </article>
+  {% empty %}
+    <h1>No Birds found matching your query</h1>
   {% endfor %}
 </div>
+
 {% endblock %}
