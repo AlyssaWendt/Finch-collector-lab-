@@ -10,5 +10,7 @@ urlpatterns = [
     path('finch/<int:pk>/update',views.FinchUpdate.as_view(), name="finch_update"),
     path('finch/<int:pk>/delete',views.FinchDelete.as_view(), name="finch_delete"),
     path('finch/<int:pk>/songs/new/', views.SongCreate.as_view(), name="song_create"),
+    path('playlists/<int:pk>/songs/<int:song_pk>/', views.PlaylistSongAssoc.as_view(),name="playlist_song_assoc"),
+    path('accounts/signup/', views.Signup.as_view(), name="signup")
    
 ]
