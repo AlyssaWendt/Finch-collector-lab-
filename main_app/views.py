@@ -28,7 +28,7 @@ class About(TemplateView):
     
 
 
-@method_decorator(login_required, name='dispatch')
+
 class FinchList(TemplateView):
     template_name = "finch_list.html"
 
@@ -94,7 +94,7 @@ class FinchDelete(DeleteView):
 
 
 
-@method_decorator(login_required, name='dispatch')    
+  
 class SongCreate(View):
 
     def post(self, request, pk):
