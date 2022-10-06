@@ -40,7 +40,7 @@ class FinchList(TemplateView):
                 name__icontains=name, user=self.request.user)
             context["header"] = f"Searching for {name}"
         else:
-            context["Finch"] = Finch.objects.filter(user=self.request.user)
+            context["finch"] = Finch.objects.filter(user=self.request.user)
             context["header"] = "Cool Birds"
         return context
 
@@ -135,7 +135,7 @@ class Signup(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("artist_list")
+            return redirect("finch_list")
         else:
             context = {"form": form}
             return render(request, "registration/signup.html", context)
